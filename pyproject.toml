@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "ematico"
+version = "0.1.0"
+description = "Ematico is a web application for visualizing blood test results."
+authors = ["Andrea Iorio <andreaiorio@me.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+dash = "^2.15.0"
+dash-bootstrap-components = "^1.5.0"
+plotly = "^5.18.0"
+pandas = "^2.2.0"
+numpy = "^1.26.4"
+gspread = "^6.0.1"
+openpyxl = "^3.1.2"
+dash-daq = {git = "https://github.com/plotly/dash-daq.git"}
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
