@@ -50,7 +50,7 @@ Follow these instructions to get Ematico up and running on your local machine.
 1. Run the app:
 
     ```bash
-    python app.py -f path/to/your/excel/file.xlsx
+    poetry run python app.py -f path/to/your/excel/file.xlsx
     ```
 
 2. Open your web browser and navigate to `http://127.0.0.1:8050/` to view the Ematico web application.
