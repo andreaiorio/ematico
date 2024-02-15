@@ -88,7 +88,7 @@ def draw_card(test, category, df, df_rif):
             html.Div(
                 html.Div(
                     [
-                        html.H3(test, className=""),
+                        html.H3(test, className="text-sm md:text-md lg:text-base"),
                         html.P(
                             f"{get_last_date_test(test, df)}",
                             className="text-xs text-slate-500 mt-1",
@@ -102,12 +102,12 @@ def draw_card(test, category, df, df_rif):
                     [
                         html.Big(
                             f"{last_value}",
-                            className=f"text-{circle_color}-300",
+                            className=f"text-{circle_color}-300 text-sm md:text-md lg:text-lg",
                         ),
                         html.Br(),
                         html.Small(
                             f"{df_rif[test][2]}",
-                            className=f"text-{circle_color}-200",
+                            className=f"text-{circle_color}-200 text-xs md:text-sm",
                         ),
                     ]
                 ),
@@ -115,38 +115,38 @@ def draw_card(test, category, df, df_rif):
             ),
             html.Div(
                 html.Div(
-                    className="rounded-xl shadow-sm overflow-hidden p-3 h-[100%] bg-neutral-800 mr-3",
+                    className="rounded-xl shadow-sm overflow-hidden p-3 h-[100%] bg-neutral-800",
                     children=[
                         html.Div(
                             className="flex items-center justify-left",
                             children=[
                                 html.Div(
                                     children="Low",
-                                    className="inline-block w-[15%] opacity-100 inline-block w-[10%] text-xs text-center uppercase font-bold",
+                                    className="inline-block w-[15%] opacity-100 inline-block w-[10%] text-[8px] sm:text-[10px]  text-center uppercase font-bold",
                                 ),
                                 html.Div(
                                     children="Below average",
-                                    className="inline-block w-[15%] opacity-100 inline-block w-[15%] text-xs text-center uppercase font-bold",
+                                    className="inline-block w-[15%] opacity-100 inline-block w-[15%] text-[8px] sm:text-[10px]  text-center uppercase font-bold",
                                 ),
                                 html.Div(
                                     children="Optimal",
-                                    className="inline-block w-[15%] opacity-100 inline-block w-[50%] text-xs text-center uppercase font-bold",
+                                    className="inline-block w-[15%] opacity-100 inline-block w-[50%] text-[8px] sm:text-[10px]  text-center uppercase font-bold",
                                 ),
                                 html.Div(
                                     children="Above average",
-                                    className="inline-block w-[15%] opacity-100  inline-block w-[15%] text-xs text-center uppercase font-bold",
+                                    className="inline-block w-[15%] opacity-100  inline-block w-[15%] text-[8px] sm:text-[10px] text-center uppercase font-bold",
                                 ),
                                 html.Div(
                                     children="High",
-                                    className="inline-block w-[15%] opacity-100 inline-block w-[10%] text-xs text-center uppercase font-bold",
+                                    className="inline-block w-[15%] opacity-100 inline-block w-[10%] text-[8px] sm:text-[10px]  text-center uppercase font-bold",
                                 ),
                             ],
                         ),
                         html.Div(
-                            className="flex items-center justify-left gap-1 h-2 mt-1 relative",
+                            className="flex items-center justify-left gap-1 h-1 mt-1 relative",
                             children=[
                                 html.Div(
-                                    className=f"h-7 w-7 rounded-full absolute left-[{percentage}%] border-4 border-neutral-800 shadow-black bg-{circle_color}-400"
+                                    className=f"h-5 w-5 rounded-full absolute left-[{percentage}%] border-4 border-neutral-800 shadow-black bg-{circle_color}-400"
                                 ),
                                 html.Div(
                                     className="inline-block h-[100%] opacity-100 rounded-lg w-[10%] bg-red-200"
