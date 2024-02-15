@@ -9,10 +9,11 @@ def create_app(file_path):
     app = Dash(
         external_stylesheets=[dbc.themes.DARKLY],
         external_scripts=[{"src": "https://cdn.tailwindcss.com"}],
+        update_title=None,
     )
     df, df_rif, categories = load.load_data(file_path)
     layout = components.build_layout(df, df_rif, categories)
-    app.layout = html.Div(layout)
+    app.layout = html.Div(layout, className="p-16")
     return app
 
 

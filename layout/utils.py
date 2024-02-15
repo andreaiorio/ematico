@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 
 def get_min_max_threshold(test, df, df_rif, threshold=0.1):
@@ -19,6 +20,19 @@ def get_percentage(value, test, df, df_rif, threshold=0.25):
 
     # Convert to percentage and round
     return int(value * 100)
+
+
+def get_last_date(df):
+    date = df.tail(1)["Data"].values[0]
+    date = pd.to_datetime(str(date)).strftime("%B %d, %Y")
+    return date
+
+
+def get_last_date_test(test, df):
+    index_date = df[test].dropna().tail(1).index[-1]
+    date = df.loc[index_date, "Data"]
+    date = date.strftime("%d/%m/%Y")
+    return date
 
 
 def get_optimal_values(test, df_rif):

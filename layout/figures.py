@@ -3,7 +3,13 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 import numpy as np
 
-from layout.utils import get_min_max_threshold, get_label, make_slug, get_percentage
+from layout.utils import (
+    get_min_max_threshold,
+    get_label,
+    make_slug,
+    get_percentage,
+    get_last_date_test,
+)
 
 
 def draw_plot(test, color, df, df_rif):
@@ -83,6 +89,10 @@ def draw_card(test, category, df, df_rif):
                 html.Div(
                     [
                         html.H3(test, className=""),
+                        html.P(
+                            f"{get_last_date_test(test, df)}",
+                            className="text-xs text-slate-500 mt-1",
+                        ),
                     ]
                 ),
                 className="col-span-1",

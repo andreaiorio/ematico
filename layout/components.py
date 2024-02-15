@@ -1,40 +1,53 @@
-from dash import html
+from dash import html, get_asset_url
 import dash_bootstrap_components as dbc
 import plotly.express as px
 
 from layout.figures import draw_card, draw_plot
-from layout.utils import get_min_max_threshold, get_label, make_slug
+from layout.utils import get_min_max_threshold, get_label, make_slug, get_last_date
 
 
 def build_sidebar(categories):
-    sidebar = html.Div(
+    sidebar = html.Aside(
         [
             html.H4(
-                "Category",
-                className="uppercase text-sm font-bold tracking-widest ml-5 mb-3",
+                "Body systems",
+                className="uppercase text-sm font-bold tracking-widest mb-3",
             ),
             dbc.Nav(
                 [
                     dbc.NavLink(
-                        category, href=f"#{make_slug(category)}", active="exact"
+                        category,
+                        href=f"#{make_slug(category)}",
+                        external_link=True,
+                        className="p-2",
                     )
                     for category in categories
                 ],
                 vertical=True,
                 pills=True,
+                className="",
             ),
         ],
-        className="fixed inset-0 w-64 py-2 px-1",
+        className="self-start sticky top-10 col-span-1",
     )
     return sidebar
 
 
-def build_header():
-    return html.H1("Ematico dashboard", className="text-5xl font-sans mb-4 font-bold")
+def build_header(df):
+    return html.Header(
+        [
+            html.Img(src=get_asset_url("logo.svg"), className="h-12 cursor-pointer"),
+            html.P(
+                f"Last update: {get_last_date(df)}",
+                className="text-sm text-gray-400",
+            ),
+        ],
+        className="mb-8",
+    )
 
 
 def build_layout(df, df_rif, categories):
-    header = build_header()
+    header = build_header(df)
     sidebar = build_sidebar(categories)
 
     color_scale = px.colors.qualitative.Set1
@@ -66,14 +79,20 @@ def build_layout(df, df_rif, categories):
             dash_group += [draw_card(esame, category, df, df_rif)]
         dash_group = html.Div(dash_group, className="grid grid-cols-2 gap-3")
 
-        dash_cards += [html.H3(category, className="text-2xl mb-3 mt-5")] + [dash_group]
+        dash_cards += [
+            html.Div(
+                [html.H3(category, className="text-2xl mb-3")] + [dash_group],
+                className="bg-neutral-900 p-5 rounded-xl",
+                id=f"{make_slug(category)}",
+            )
+        ]
 
-    dash_cards = html.Div(dash_cards)
+    dash_cards = html.Div(dash_cards, className="grid grid-cols-1 gap-3")
 
     return [
-        dbc.Container(
-            [sidebar] + [header] + [dash_cards] + [dash_list],
-            fluid=True,
-            className="ml-64 mt-4 py-2 px-2 w-auto",
-        )
+        header,
+        html.Main(
+            [sidebar] + [html.Div([dash_cards] + [dash_list], className="col-span-6")],
+            className="grid grid-cols-7",
+        ),
     ]

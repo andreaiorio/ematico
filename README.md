@@ -1,4 +1,4 @@
-# Ematico
+# <img src="assets/logo.svg" alt="Ematico" height="50em">
 
 Ematico is a web application for visualizing blood test results. It provides an interactive and user-friendly interface to explore and analyze blood test data. It is built with Plotly and Dash.
 
@@ -39,21 +39,18 @@ Follow these instructions to get Ematico up and running on your local machine.
 
    This will install the required dependencies specified in the `pyproject.toml` file, including both the main and development dependencies.
 
-4. Run the Ematico web application:
+## Usage
+
+1. Run the Ematico web application:
 
     ```bash
     poetry run python app.py -f path/to/your/excel/file.xlsx
     ```
 
-### Usage
+2. Open your web browser and navigate to `http://127.0.0.1:8050/` to view Ematico.
 
-1. Run the app:
-
-    ```bash
-    poetry run python app.py -f path/to/your/excel/file.xlsx
-    ```
-
-2. Open your web browser and navigate to `http://127.0.0.1:8050/` to view the Ematico web application.
+## Screenshot
+![Ematico screenshot](assets/screenshot.png "Ematico screenshot")
 
 ## Contributing
 
