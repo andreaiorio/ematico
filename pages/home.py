@@ -3,7 +3,7 @@ from dash import html, Input, Output, callback
 import pandas as pd
 from layout import components
 
-dash.register_page(__name__, order=1, path="/")
+dash.register_page(__name__, order=1, path="/", title="Ematico Dashboard")
 
 
 def layout():

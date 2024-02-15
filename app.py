@@ -48,4 +48,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     app = create_app(args.file)
-    app.run()
+    app.run(debug=True)

@@ -70,7 +70,7 @@ def draw_plot(test, color, df, df_rif):
 
 
 def draw_card(test, category, df, df_rif):
-    last_value = np.round(df[test].dropna().tail(1).values[0], 0)
+    last_value = np.round(df[test].dropna().tail(1).values[0], 1)
     vmin, vmax = get_min_max_threshold(test, df, df_rif)
     percentage = get_percentage(last_value, test, df, df_rif)
 
