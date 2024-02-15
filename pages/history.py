@@ -1,6 +1,6 @@
 import dash
 from dash import html, Input, Output, callback
-import pandas as pd  # Import pandas for DataFrame operations
+import pandas as pd
 from layout import components
 
 dash.register_page(__name__, order=2)

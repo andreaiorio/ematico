@@ -10,6 +10,7 @@ from dash import (
 )
 from layout import components
 from data import load
+import json
 
 
 def create_app(file_path):
@@ -47,4 +48,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     app = create_app(args.file)
-    app.run(debug=True)
+    app.run()
