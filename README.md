@@ -60,11 +60,6 @@ If you would like to contribute to Ematico, please follow the guidelines in [CON
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Acknowledgments
-
-- [Plotly Dash](https://dash.plotly.com/)
-- [Dash Bootstrap Components](https://dash-bootstrap-components.opensource.faculty.ai/)
-
 ## Contact
 
 For any questions or issues, please open an [issue](https://github.com/andreaiorio/ematico/issues).

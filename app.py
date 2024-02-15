@@ -1,6 +1,13 @@
 import argparse
 import dash_bootstrap_components as dbc
-from dash import Dash, html
+from dash import (
+    Dash,
+    html,
+    dcc,
+    page_container,
+    Output,
+    Input,
+)
 from layout import components
 from data import load
 
@@ -10,10 +17,25 @@ def create_app(file_path):
         external_stylesheets=[dbc.themes.DARKLY],
         external_scripts=[{"src": "https://cdn.tailwindcss.com"}],
         update_title=None,
+        title="Ematico – Dashboard",
+        use_pages=True,
     )
+
     df, df_rif, categories = load.load_data(file_path)
-    layout = components.build_layout(df, df_rif, categories)
-    app.layout = html.Div(layout, className="p-16")
+    sidebar = components.build_sidebar(categories)
+    navbar = components.build_navbar(df)
+    main = components.build_main(sidebar, page_container)
+
+    app.layout = html.Div(
+        [
+            dcc.Store(id="df", data=df.to_json()),
+            dcc.Store(id="df_rif", data=df_rif.to_json()),
+            dcc.Store(id="categories", data=categories),
+            navbar,
+            main,
+        ],
+        className="font-sans",
+    )
     return app
 
 
@@ -25,4 +47,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     app = create_app(args.file)
-    app.run()
+    app.run(debug=True)
