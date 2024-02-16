@@ -9,6 +9,10 @@ def get_min_max_threshold(test, df, df_rif, threshold=0.1):
     return min_y, max_y
 
 
+def get_min_max_optimal(test, df_rif):
+    return np.round(df_rif[test][0], 1), np.round(df_rif[test][1], 1)
+
+
 def get_percentage(value, test, df, df_rif, threshold=0.25):
     opt_min, opt_max = get_optimal_values(test, df_rif)
 

@@ -9,14 +9,21 @@ from layout.utils import (
     make_slug,
     get_percentage,
     get_last_date_test,
+    get_min_max_optimal,
+    get_label,
 )
 
 
 def draw_plot(test, color, df, df_rif):
-    min_y, max_y = get_min_max_threshold(test, df, df_rif)
+    plot_min_y, plot_max_y = get_min_max_threshold(test, df, df_rif)
+    min_y, max_y = get_min_max_optimal(test, df_rif)
     return html.Div(
         [
             html.H4(test, className="font-bold uppercase text-xs tracking-widest"),
+            html.P(
+                f"Unit: {get_label(test, df_rif)}",
+                className="text-[10px] text-gray-400",
+            ),
             html.Div(
                 [
                     dcc.Graph(
@@ -27,34 +34,29 @@ def draw_plot(test, color, df, df_rif):
                             height=150,
                             markers=True,
                             line_shape="spline",
-                            range_y=[min_y, max_y],
+                            range_y=[plot_min_y, plot_max_y],
                         )
                         .update_layout(
                             yaxis_title=None,
+                            xaxis_title=None,
                             template="plotly_dark",
                             margin={"t": 0, "l": 0, "b": 0, "r": 0},
                             plot_bgcolor="rgba(0, 0, 0, 0)",
                             paper_bgcolor="rgba(0, 0, 0, 0)",
-                            # yaxis_range=[float(df_rif[test][0]), float(df_rif[test][1])],
-                            # Set the desired height in pixels
-                        )
-                        .update_yaxes(
-                            ticksuffix=" " + get_label(test, df_rif), showgrid=False
                         )
                         .update_xaxes(showgrid=False)
                         .update_traces(
                             connectgaps=True,
-                            # Set the line color for this plot
                             line=dict(color=color),
                         )
                         .add_hline(
-                            y=df_rif[test][0],
+                            y=min_y,
                             line_width=1,
                             line_dash="dash",
                             line_color="green",
                         )
                         .add_hline(
-                            y=df_rif[test][1],
+                            y=max_y,
                             line_width=1,
                             line_dash="dash",
                             line_color="green",
@@ -73,6 +75,8 @@ def draw_card(test, category, df, df_rif):
     last_value = np.round(df[test].dropna().tail(1).values[0], 1)
     vmin, vmax = get_min_max_threshold(test, df, df_rif)
     percentage = get_percentage(last_value, test, df, df_rif)
+    min_y, max_y = get_min_max_optimal(test, df_rif)
+    unit = get_label(test, df_rif)
 
     if 25 <= percentage <= 75:
         circle_color = "green"
@@ -106,7 +110,7 @@ def draw_card(test, category, df, df_rif):
                         ),
                         html.Br(),
                         html.Small(
-                            f"{df_rif[test][2]}",
+                            f"{unit}",
                             className=f"text-{circle_color}-200 text-xs md:text-sm",
                         ),
                     ]
@@ -146,7 +150,13 @@ def draw_card(test, category, df, df_rif):
                             className="flex items-center justify-left gap-1 h-1 mt-1 relative",
                             children=[
                                 html.Div(
-                                    className=f"h-5 w-5 rounded-full absolute left-[{percentage}%] border-4 border-neutral-800 shadow-black bg-{circle_color}-400"
+                                    id=f"tooltip-target-{make_slug(test)}",
+                                    className=f"h-5 w-5 cursor-pointer rounded-full absolute translate-x-[-50%] left-[{percentage}%] border-4 border-neutral-800 shadow-black bg-{circle_color}-400",
+                                ),
+                                dbc.Tooltip(
+                                    f"{last_value} ",
+                                    target=f"tooltip-target-{make_slug(test)}",
+                                    placement="top",
                                 ),
                                 html.Div(
                                     className="inline-block h-[100%] opacity-100 rounded-lg w-[10%] bg-red-200"
@@ -162,6 +172,19 @@ def draw_card(test, category, df, df_rif):
                                 ),
                                 html.Div(
                                     className="inline-block h-[100%] opacity-100 rounded-lg w-[10%] bg-red-200"
+                                ),
+                            ],
+                        ),
+                        html.Div(
+                            className="flex items-center justify-left gap-1 h-1 mt-1 relative",
+                            children=[
+                                html.Div(
+                                    f"{min_y}",
+                                    className=f"cursor-pointer  text-[10px] rounded-full translate-x-[-50%] text-gray-400 absolute left-[25%] mt-2",
+                                ),
+                                html.Div(
+                                    f"{max_y}",
+                                    className=f"cursor-pointer text-[10px] rounded-full translate-x-[-50%] text-gray-400 absolute left-[75%] mt-2",
                                 ),
                             ],
                         ),

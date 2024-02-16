@@ -98,7 +98,7 @@ def build_time_plots(df, df_rif, categories):
             dash_group += [draw_plot(esame, color, df, df_rif)]
         dash_group = html.Div(
             dash_group,
-            className=f"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-{cols} gap-3",
+            className=f"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-{cols} gap-3",
         )
 
         dash_list += [
