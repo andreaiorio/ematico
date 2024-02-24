@@ -8,9 +8,42 @@ from layout.utils import get_min_max_threshold, get_label, make_slug, get_last_d
 
 def build_main(sidebar, page):
     return html.Main(
-        [sidebar, html.Div(page, className="col-span-1 lg:col-span-5")],
+        [sidebar, html.Div(page, className="col-span-1 mb-4 lg:col-span-5")],
         className="grid grid-cols-1 lg:grid-cols-6 px-6 gap-x-5 mt-4",
     )
+
+
+def build_main_new(sidebar, page):
+    return html.Main(
+        [sidebar, html.Div(page, className="col-span-1 mb-4 lg:col-span-5")],
+        className="grid grid-cols-1 lg:grid-cols-6 px-6 gap-x-5 mt-4",
+    )
+
+
+def build_sidebar_new(categories):
+    sidebar = html.Aside(
+        [
+            html.H4(
+                "Body systems",
+                className="uppercase text-sm font-bold tracking-widest mb-3",
+            ),
+            dbc.Nav(
+                [
+                    dbc.Switch(
+                        id=f"{make_slug(category)}",
+                        label=category,
+                        value=False,
+                    )
+                    for category in categories
+                ],
+                vertical=True,
+                pills=True,
+                className="inline-block ml-2 mr-4",
+            ),
+        ],
+        className="lg:self-start lg:sticky lg:top-10 mb-3 col-span-1",
+    )
+    return sidebar
 
 
 def build_navbar(df):
@@ -54,6 +87,17 @@ def build_navbar(df):
 
 
 def build_sidebar(categories):
+    navlinks = []
+    for i, category in enumerate(categories):
+        navlinks += [
+            dbc.NavLink(
+                category,
+                href=f"#{make_slug(category)}",
+                external_link=True,
+                className=f"lg:px-2 lg:py-2 px-2 text-xs my-1 lg:text-sm  rounded inline-block !text-gray-400 hover:bg-neutral-900 hover:!text-white",
+            )
+        ]
+
     sidebar = html.Aside(
         [
             html.H4(
@@ -61,15 +105,7 @@ def build_sidebar(categories):
                 className="uppercase text-sm font-bold tracking-widest mb-3",
             ),
             dbc.Nav(
-                [
-                    dbc.NavLink(
-                        category,
-                        href=f"#{make_slug(category)}",
-                        external_link=True,
-                        className="lg:px-2 lg:py-2 px-2 text-xs my-1 lg:text-sm  rounded inline-block !text-gray-400 hover:bg-neutral-900 hover:!text-white",
-                    )
-                    for category in categories
-                ],
+                navlinks,
                 vertical=True,
                 pills=True,
                 className="inline-block ml-2 mr-4",
@@ -118,7 +154,14 @@ def build_home_dashboard(df, df_rif, categories):
         dash_group = []
         for esame in categories[category]:
             vmin, vmax = get_min_max_threshold(esame, df, df_rif)
-            dash_group += [draw_card(esame, category, df, df_rif)]
+            dash_group += [
+                html.Div(
+                    [
+                        draw_card(esame, category, df, df_rif),
+                        # draw_plot(esame, "white", df, df_rif, ""),
+                    ]
+                )
+            ]
         dash_group = html.Div(
             dash_group, className="grid grid-cols-1 gap-3 xl:grid-cols-2"
         )

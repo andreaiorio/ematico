@@ -14,7 +14,7 @@ from layout.utils import (
 )
 
 
-def draw_plot(test, color, df, df_rif):
+def draw_plot(test, color, df, df_rif, className=""):
     plot_min_y, plot_max_y = get_min_max_threshold(test, df, df_rif)
     min_y, max_y = get_min_max_optimal(test, df_rif)
     return html.Div(
@@ -67,11 +67,11 @@ def draw_plot(test, color, df, df_rif):
                 className="mt-2",
             ),
         ],
-        className="rounded-xl bg-neutral-800 p-4",
+        className="rounded-xl bg-neutral-800 p-4 " + className,
     )
 
 
-def draw_card(test, category, df, df_rif):
+def draw_card(test, category, df, df_rif, className=""):
     last_value = np.round(df[test].dropna().tail(1).values[0], 1)
     vmin, vmax = get_min_max_threshold(test, df, df_rif)
     percentage = get_percentage(last_value, test, df, df_rif)
@@ -151,7 +151,7 @@ def draw_card(test, category, df, df_rif):
                             children=[
                                 html.Div(
                                     id=f"tooltip-target-{make_slug(test)}",
-                                    className=f"h-5 w-5 cursor-pointer rounded-full absolute translate-x-[-50%] left-[{percentage}%] border-4 border-neutral-800 shadow-black bg-{circle_color}-400",
+                                    className=f"h-5 w-5 cursor-pointer rounded-full absolute translate-x-[-50%] shadow-xl left-[{percentage}%] border-4 border-neutral-800 shadow-{circle_color}-500 bg-{circle_color}-400",
                                 ),
                                 dbc.Tooltip(
                                     f"{last_value} ",
@@ -193,6 +193,6 @@ def draw_card(test, category, df, df_rif):
                 className="col-span-4",
             ),
         ],
-        className="mb-3 items-center grid grid-cols-6",
+        className="mb-3 items-center grid grid-cols-6 " + className,
     )
     return card

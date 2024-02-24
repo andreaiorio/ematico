@@ -27,6 +27,8 @@ def create_app(file_path):
     navbar = components.build_navbar(df)
     main = components.build_main(sidebar, page_container)
 
+    # main = components.build_main_new(sidebar, page_container)
+
     app.layout = html.Div(
         [
             dcc.Store(id="df", data=df.to_json()),
@@ -36,6 +38,7 @@ def create_app(file_path):
             main,
         ],
         className="font-sans",
+        style={"font-family": "'Nunito'"},
     )
     return app
 
@@ -48,4 +51,4 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     app = create_app(args.file)
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=8050)
