@@ -44,11 +44,14 @@ def create_app(file_path):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Your script description.")
+    parser = argparse.ArgumentParser(
+        description="Ematico, interactive visualization of blood test results."
+    )
     parser.add_argument(
         "-f", "--file", type=str, required=True, help="Path to the Excel file"
     )
+    parser.add_argument("-p", "--port", type=int, required=True, help="Port number")
     args = parser.parse_args()
 
     app = create_app(args.file)
-    app.run(debug=False, host="0.0.0.0", port=8050)
+    app.run(debug=False, host="0.0.0.0", port=args.port)
