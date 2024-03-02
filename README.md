@@ -1,10 +1,10 @@
-# <img src="assets/logo.svg" alt="Ematico" height="50em">
+# <img src="ematico/assets/logo.svg" alt="Ematico" height="50em">
 
 Ematico is a web application for visualizing blood test results. It provides an interactive and user-friendly interface to explore and analyze blood test data. It is built with Plotly and Dash.
 
 ## Features
 
-- **Interactive Visualization**: Visualize blood test results using interactive Plotly Dash components.
+- **Interactive Visualization**: Visualize blood test results using interactive components.
 - **Categorized Display**: Display blood test results categorized by different groups.
 - **Responsive Design**: Ensure a seamless experience on various devices.
 
@@ -50,7 +50,7 @@ Follow these instructions to get Ematico up and running on your local machine.
 2. Open your web browser and navigate to `http://127.0.0.1:8050/` to view Ematico.
 
 ## Screenshot
-![Ematico screenshot](assets/screenshot.png "Ematico screenshot")
+![Ematico screenshot](ematico/assets/screenshot.png "Ematico screenshot")
 
 ## Contributing
 
